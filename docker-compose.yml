@@ -1,26 +1,8 @@
 version: '3.8'
 
 services:
-  # Run once and exit
-  plex-movie-finder-run:
+  plex-movie-downloader:
     build: .
-    environment:
-      - PLEX_URL=http://your-plex-server:32400
-      - PLEX_TOKEN=your-plex-token-here
-      - RUN_MODE=RUN
+    env_file:
+      - .env
     restart: "no"
-    profiles:
-      - run-once
-
-  # Run daily at specified time (keeps container running)
-  plex-movie-finder-scheduled:
-    build: .
-    environment:
-      - PLEX_URL=http://your-plex-server:32400
-      - PLEX_TOKEN=your-plex-token-here
-      - RUN_MODE=TIME
-      - RUN_TIME=09:00  # 24-hour format (HH:MM)
-      - RUN_ON_STARTUP=false  # Set to 'true' to run immediately when container starts
-    restart: unless-stopped
-    profiles:
-      - scheduled

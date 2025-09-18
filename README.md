@@ -97,25 +97,7 @@ A Docker application that connects to your Plex server and finds all movies that
 
 ### Running the Application
 
-#### Option 1: Run Once (RUN Mode)
-```bash
-# Using docker-compose profiles
-docker-compose --profile run-once up --build
-
-# Or set RUN_MODE=RUN in .env and run:
-docker-compose up --build
-```
-
-#### Option 2: Scheduled Daily Runs (TIME Mode)
-```bash
-# Using docker-compose profiles (runs daily at 9 AM)
-docker-compose --profile scheduled up -d --build
-
-# Or set RUN_MODE=TIME in .env and run:
-docker-compose up -d --build
-```
-
-#### Option 3: Custom Configuration
+#### Custom Configuration
 Edit your `.env` file:
 ```bash
 RUN_MODE=TIME
