@@ -1,4 +1,4 @@
-# Plex Movie Finder
+# Plex Poster Finder
 
 A Docker application that connects to your Plex server and finds all movies that don't have a "Fanart" label, then automatically sets high-quality posters from either fanart.tv or TMDB.
 
@@ -163,120 +163,6 @@ docker run -d --env-file .env \
 | `MOVIE_LANGUAGE` | `en` | Preferred poster language (2-letter ISO code) |
 | `IGNORE_OVERLAY_TAG` | `false` | Also ignore movies with 'Overlay' label |
 
-## Output Format
-
-The application will display:
-- Run mode and configuration
-- Connection status to your Plex server
-- Poster source being used (fanart.tv or TMDB)
-- Progress as it scans each movie library
-- **All available posters** with stats (votes/ratings, language, URLs)
-- **Selected poster** with reasoning
-- Poster application status
-- Label management (adding Fanart, removing Overlay)
-- Summary count and completion timestamp
-
-## Example Output
-
-### fanart.tv Source
-```
-🎨 Artwork processing: ENABLED (using fanart.tv)
-🔑 Fanart.tv API key: ✅ Set
-🏷️  Ignoring only 'Fanart' label
-
-Scanning library: Movies
-Found 25 movies without 'Fanart' label (direct filter)
---------------------------------------------------
-  1. Dune (2021)
-     Added: 2025-09-14 20:15
-     Labels: Action, Sci-Fi
-     🎨 Processing artwork...
-     🔍 Searching fanart.tv with TMDB ID: 438631
-     📋 Found 4 poster(s) available:
-         1. 👍 847 likes, 🌐 en
-            URL: https://assets.fanart.tv/fanart/movies/438631/movieposter/dune-1.jpg
-         2. 👍 623 likes, 🌐 en
-            URL: https://assets.fanart.tv/fanart/movies/438631/movieposter/dune-2.jpg
-         3. 👍 445 likes, 🌐 es
-            URL: https://assets.fanart.tv/fanart/movies/438631/movieposter/dune-es.jpg
-     ✅ Selected poster with most votes: 👍 847 likes, 🌐 en
-     🖼️  Setting poster from fanart.tv
-     ✅ Poster set successfully
-     🏷️  Added 'Fanart' label
-     ✅ PROCESSED (with fanart)
-
-================================================================================
-SUMMARY: 25 movies processed
-✅ Successful: 24
-🎨 Fanart set: 22
-❌ Failed: 1
-================================================================================
-```
-
-### TMDB Source
-```
-🎨 Artwork processing: ENABLED (using TMDB)
-🔑 TMDB API key: ✅ Set
-
-  1. Inception (2010)
-     🎨 Processing artwork...
-     🔍 Searching TMDB for posters with ID: 27205
-     📋 Found 6 poster(s) available:
-         1. ⭐ 8.2 rating (1547 votes), 🌐 en
-            URL: https://image.tmdb.org/t/p/w780/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg
-         2. ⭐ 7.8 rating (892 votes), 🌐 es
-            URL: https://image.tmdb.org/t/p/w780/edv5CZvIx5oFdNEZmOsyTdZbZup.jpg
-     ✅ Selected poster with highest rating: ⭐ 8.2 rating (1547 votes), 🌐 en
-     🖼️  Setting poster from TMDB
-     ✅ Poster set successfully
-     🏷️  Added 'Fanart' label
-     ✅ PROCESSED (with fanart)
-```
-
-## Managing Scheduled Runs
-
-### View logs from scheduled container:
-```bash
-docker-compose --profile scheduled logs -f plex-movie-finder-scheduled
-```
-
-### Stop scheduled container:
-```bash
-docker-compose --profile scheduled down
-```
-
-### Change schedule without rebuilding:
-```bash
-# Stop current container
-docker-compose down
-
-# Update RUN_TIME in .env file
-# Restart with new schedule
-docker-compose --profile scheduled up -d
-```
-
-## Language Support
-
-Set your preferred poster language using 2-letter ISO codes:
-
-| Language | Code | Example |
-|----------|------|---------|
-| English | `en` | `MOVIE_LANGUAGE=en` |
-| Spanish | `es` | `MOVIE_LANGUAGE=es` |
-| French | `fr` | `MOVIE_LANGUAGE=fr` |
-| German | `de` | `MOVIE_LANGUAGE=de` |
-| Italian | `it` | `MOVIE_LANGUAGE=it` |
-| Japanese | `ja` | `MOVIE_LANGUAGE=ja` |
-| Korean | `ko` | `MOVIE_LANGUAGE=ko` |
-| Portuguese | `pt` | `MOVIE_LANGUAGE=pt` |
-| Russian | `ru` | `MOVIE_LANGUAGE=ru` |
-| Chinese | `zh` | `MOVIE_LANGUAGE=zh` |
-
-**Fallback logic:**
-1. Tries your preferred language first
-2. Falls back to English if preferred language not available  
-3. Uses any available poster if English not available
-
 ## Label Management
 
 ### Default Behavior (IGNORE_OVERLAY_TAG=false)
@@ -293,37 +179,6 @@ Set your preferred poster language using 2-letter ISO codes:
 
 **Connection Error**: Verify your PLEX_URL and PLEX_TOKEN in the `.env` file
 
-**API Key Errors**: 
-- fanart.tv: Check FANART_API_KEY is valid at https://fanart.tv
-- TMDB: Check TMDB_API_KEY is valid at https://themoviedb.org
-
-**No Posters Found**: 
-- Movie might not exist in chosen database
-- Try switching between fanart.tv and TMDB
-- Check if movie has correct IMDB/TMDB IDs in Plex
-
-**Container Exits Immediately**: Check logs with `docker-compose logs`
-
-**Processing Stops Early**: Usually indicates connection issues to poster APIs
-
-**Movies Not Found**: Ensure RUN_MODE and filtering labels are set correctly
-
-## Comparison: fanart.tv vs TMDB
-
-| Feature | fanart.tv | TMDB |
-|---------|-----------|------|
-| **Poster Quality** | Community artwork, often creative | Official studio posters |
-| **Selection Criteria** | Most likes/votes from fans | Highest rating from users |
-| **Language Support** | Good variety | Excellent variety |
-| **Reliability** | Sometimes slower/unstable | Very reliable |
-| **API Rate Limits** | More restrictive | More generous |
-| **Poster Styles** | Artistic, fan-made variants | Professional, consistent |
-| **Coverage** | Good for popular movies | Comprehensive coverage |
-
-**Recommendation**: 
-- Use **TMDB** for reliability and official posters
-- Use **fanart.tv** for unique artistic variants and fan favorites
-
 ## Security Notes
 
 - The container runs as a non-root user
@@ -338,8 +193,6 @@ For testing locally in PyCharm:
 2. Create `.env` file with your configuration
 3. Set PyCharm run configuration environment variables or use the `.env` file
 4. Run `main.py` directly
-
-## Advanced Usage
 
 ### Custom Poster Selection
 The app shows all available posters with their stats, so you can:
