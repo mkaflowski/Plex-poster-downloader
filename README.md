@@ -1,4 +1,4 @@
-# Plex Poster Finder
+# Plex Poster Downloader
 
 A Docker application that connects to your Plex server and finds all movies that don't have a "Fanart" label, then automatically sets high-quality posters from either fanart.tv or TMDB.
 
