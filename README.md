@@ -66,8 +66,12 @@ A Docker application that connects to your Plex server and finds all movies that
 1. Go to https://www.themoviedb.org/settings/api
 2. Sign up and request API key
 3. Used for movie ID lookups and TMDB posters
-
+4. 
 ### Setup
+
+Install from Docker Hub.
+
+### Manual setup
 
 1. Clone or download these files to a directory
 2. Copy `.env.example` to `.env`:
@@ -131,19 +135,21 @@ docker run -d --env-file .env \
 
 ## Configuration Options
 
-| Environment Variable | Default | Description |
-|---------------------|---------|-------------|
-| `PLEX_URL` | Required | Your Plex server URL |
-| `PLEX_TOKEN` | Required | Your Plex authentication token |
-| `RUN_MODE` | `RUN` | `RUN` (once) or `TIME` (scheduled) |
-| `RUN_TIME` | `09:00` | Daily run time in HH:MM format |
-| `RUN_ON_STARTUP` | `false` | Run immediately when container starts (TIME mode only) |
-| `ENABLE_FANART` | `false` | Enable poster processing |
-| `PREFER_TMDB` | `false` | Use TMDB instead of fanart.tv |
-| `FANART_API_KEY` | - | fanart.tv API key (required if PREFER_TMDB=false) |
-| `TMDB_API_KEY` | - | TMDB API key (always required) |
-| `MOVIE_LANGUAGE` | `en` | Preferred poster language (2-letter ISO code) |
-| `IGNORE_OVERLAY_TAG` | `false` | Also ignore movies with 'Overlay' label |
+| Environment Variable | Default         | Description                                            |
+|----------------------|-----------------|--------------------------------------------------------|
+| `PLEX_URL`           | Required        | Your Plex server URL                                   |
+| `PLEX_TOKEN`         | Required        | Your Plex authentication token                         |
+| `RUN_MODE`           | `RUN`           | `RUN` (once) or `TIME` (scheduled)                     |
+| `RUN_TIME`           | `09:00`         | Daily run time in HH:MM format                         |
+| `RUN_ON_STARTUP`     | `false`         | Run immediately when container starts (TIME mode only) |
+| `ENABLE_FANART`      | `false`         | Enable poster processing                               |
+| `PREFER_TMDB`        | `false`         | Use TMDB instead of fanart.tv                          |
+| `FANART_API_KEY`     | -               | fanart.tv API key (required if PREFER_TMDB=false)      |
+| `TMDB_API_KEY`       | -               | TMDB API key (always required)                         |
+| `MOVIE_LANGUAGE`     | `en`            | Preferred poster language (2-letter ISO code)          |
+| `IGNORE_OVERLAY_TAG` | `false`         | Also ignore movies with 'Overlay' label                |
+| `TZ`                 | `Europe/Warsaw` | Your timezone                                          |
+
 
 ## Label Management
 
