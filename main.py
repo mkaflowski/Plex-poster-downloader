@@ -650,6 +650,7 @@ if __name__ == "__main__":
         # Run once and exit
         print("Mode: RUN (execute once and exit)")
         main()
+        sys.exit(0)
     elif run_mode == 'TIME':
         # Run daily at specified time
         print(f"Mode: TIME (run daily at {run_time})")
@@ -665,7 +666,6 @@ if __name__ == "__main__":
         # Schedule the job
         schedule.every().day.at(run_time).do(run_scheduled)
         print(f"Scheduled to run daily at {run_time}")
-        print("Press Ctrl+C to stop")
 
         # Check if we should run immediately on startup
         if os.getenv('RUN_ON_STARTUP', 'false').lower() == 'true':
