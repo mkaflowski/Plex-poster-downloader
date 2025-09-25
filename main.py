@@ -408,7 +408,7 @@ def find_movies_without_fanart(plex):
             print(f"\nScanning library: {library.title}")
 
             # Check if we should ignore Overlay label as well
-            ignore_overlay = os.getenv('IGNORE_OVERLAY_TAG', 'false').lower() == 'true'
+            ignore_overlay = os.getenv('IGNORE_OVERLAY_TAGGED', 'false').lower() == 'true'
 
             try:
                 if ignore_overlay:
@@ -434,7 +434,7 @@ def find_movies_without_fanart(plex):
                     if hasattr(movie, 'labels') and movie.labels:
                         labels = [label.tag for label in movie.labels]
 
-                    # Check labels based on IGNORE_OVERLAY_TAG setting
+                    # Check labels based on IGNORE_OVERLAY_TAGGED setting
                     if ignore_overlay:
                         # Skip movies with either 'Fanart' or 'Overlay' labels
                         if 'Fanart' not in labels and 'Overlay' not in labels:
@@ -592,7 +592,7 @@ def main():
 
     # Check configuration
     enable_fanart = os.getenv('ENABLE_FANART', 'false').lower() == 'true'
-    ignore_overlay = os.getenv('IGNORE_OVERLAY_TAG', 'false').lower() == 'true'
+    ignore_overlay = os.getenv('IGNORE_OVERLAY_TAGGED', 'false').lower() == 'true'
     prefer_tmdb = os.getenv('PREFER_TMDB', 'false').lower() == 'true'
 
     if enable_fanart:

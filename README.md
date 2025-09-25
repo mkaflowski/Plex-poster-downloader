@@ -109,7 +109,7 @@ RUN_TIME=14:30  # Run daily at 2:30 PM
 RUN_ON_STARTUP=true  # Run immediately when container starts
 PREFER_TMDB=true  # Use TMDB posters
 MOVIE_LANGUAGE=es  # Spanish posters
-IGNORE_OVERLAY_TAG=true  # Also skip movies with 'Overlay' label
+IGNORE_OVERLAY_TAGGED=true  # Also skip movies with 'Overlay' label
 ```
 
 Then run:
@@ -147,18 +147,18 @@ docker run -d --env-file .env \
 | `FANART_API_KEY`     | -               | fanart.tv API key (required if PREFER_TMDB=false)      |
 | `TMDB_API_KEY`       | -               | TMDB API key (always required)                         |
 | `MOVIE_LANGUAGE`     | `en`            | Preferred poster language (2-letter ISO code)          |
-| `IGNORE_OVERLAY_TAG` | `false`         | Also ignore movies with 'Overlay' label                |
+| `IGNORE_OVERLAY_TAGGED` | `false`         | Also ignore movies with 'Overlay' label                |
 | `TZ`                 | `Europe/Warsaw` | Your timezone                                          |
 
 
 ## Label Management
 
-### Default Behavior (IGNORE_OVERLAY_TAG=false)
+### Default Behavior (IGNORE_OVERLAY_TAGGED=false)
 - Processes movies **without** 'Fanart' label
 - Adds 'Fanart' label after successful processing
 - Removes 'Overlay' label if present
 
-### Extended Filtering (IGNORE_OVERLAY_TAG=true) 
+### Extended Filtering (IGNORE_OVERLAY_TAGGED=true) 
 - Processes movies **without** 'Fanart' OR 'Overlay' labels
 - Useful if you have existing overlay processing workflows
 - Still adds 'Fanart' and removes 'Overlay' after processing
@@ -191,7 +191,7 @@ The app shows all available posters with their stats, so you can:
 ### Batch Processing
 - Use `RUN_MODE=RUN` for one-time batch processing
 - Use `RUN_MODE=TIME` for automated daily processing
-- Combine with `IGNORE_OVERLAY_TAG=true` to avoid reprocessing
+- Combine with `IGNORE_OVERLAY_TAGGED=true` to avoid reprocessing
 
 ### Integration with Other Tools
 - The 'Fanart' label can be used by other Plex tools
